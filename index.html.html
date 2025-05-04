@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Hearts</title>
+    <style>
+        :root {
+            --primary-color: #f8a5c2; /* Baby pink */
+            --secondary-color: #f8b7c2; /* Lighter baby pink */
+            --accent-color: #e5989b; /* Darker pink accent */
+            --light-color: #fffff0; /* Ivory */
+            --dark-color: #5a5a5a; /* Softer dark color for text */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color); /* Ivory background */
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            margin: 0 0.2rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links li a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        main {
+            min-height: 80vh;
+            padding: 2rem 0;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--light-color);
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .tab-container {
+            margin: 2rem 0;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #555;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        label {
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        input, textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .advice-list {
+            margin-top: 2rem;
+        }
+        
+        .advice-item {
+            background-color: white;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .advice-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .advice-item .date {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .success-message {
+            background-color: #fde2e6;
+            color: #9a3c48;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        .cookie-notice {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0,0,0,0.9);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .cookie-notice p {
+            margin-right: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Paper Hearts</div>
+            <ul class="nav-links">
+                <li><a href="#" class="tab-link" data-tab="message">Send Message</a></li>
+                <li><a href="#" class="tab-link" data-tab="advice">Advice Column</a></li>
+                <li><a href="#" class="tab-link" data-tab="about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main class="container">
+        <section class="hero">
+            <h1>Share Your Thoughts from the Heart</h1>
+            <p>A safe space to send anonymous messages. No tracking, no cookies, no personal data stored - just honest communication.</p>
+        </section>
+        
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="message">Send Message</button>
+                <button class="tab-btn" data-tab="advice">Advice Column</button>
+                <button class="tab-btn" data-tab="about">About</button>
+            </div>
+            
+            <div id="message" class="tab-content active">
+                <div class="success-message" id="message-success">
+                    Your message has been sent successfully!
+                </div>
+                <form id="message-form">
+                    <div class="form-group">
+                        <label for="message-subject">Subject</label>
+                        <input type="text" id="message-subject" placeholder="Enter a subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-content">Your Message</label>
+                        <textarea id="message-content" rows="6" placeholder="Type your message here..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Send Anonymously</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="advice" class="tab-content">
+                <h2>Advice & Feedback</h2>
+                <p>Here I share responses to anonymous messages and provide advice.</p>
+                
+                <div class="advice-list">
+                    <div class="advice-item">
+                        <h3>Dealing with Workplace Stress</h3>
+                        <div class="date">Posted on May 1, 2025</div>
+                        <p>Someone asked about managing workplace stress. Here's my advice: It's important to set boundaries at work and make time for self-care. Try taking short breaks during the day, practice mindfulness, and disconnect completely during your time off. Remember that your mental health should always be a priority.</p>
+                    </div>
+                    
+                    <div class="advice-item">
+                        <h3>Building Confidence</h3>
+                        <div class="date">Posted on April 28, 2025</div>
+                        <p>A message came in about building self-confidence. My response: Confidence comes from a combination of self-acceptance and competence. Start by recognizing your strengths, set small achievable goals, celebrate your wins (even the small ones), and practice positive self-talk. Remember that confidence is built gradually through consistent action.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="about" class="tab-content">
+                <h2>About This Site</h2>
+                <p>This platform was created to provide a safe space for anonymous communication. I believe that sometimes people need to express thoughts, ask questions, or seek advice without revealing their identity.</p>
+                <h3>How It Works</h3>
+                <ul>
+                    <li>No personal data is collected when you send a message</li>
+                    <li>No cookies are used for tracking</li>
+                    <li>No IP addresses are stored</li>
+                    <li>Messages are encrypted before being stored</li>
+                </ul>
+                <h3>Why Anonymity Matters</h3>
+                <p>Anonymity can create a safe environment for honest communication. It allows people to ask sensitive questions, provide feedback, or share experiences without fear of judgment or consequences.</p>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Paper Hearts. No cookies. No tracking. Just anonymity.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabLinks = document.querySelectorAll('.tab-link');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        function activateTab(tabId) {
+            // Hide all tab contents
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Deactivate all tab buttons
+            tabBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Activate the selected tab
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+        }
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                activateTab(tabId);
+            });
+        });
+        
+        tabLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const tabId = link.getAttribute('data-tab');
+                activateTab(tabId);
+            });
+        });
+        
+        // Form submission with localStorage
+        const messageForm = document.getElementById('message-form');
+        const messageSuccess = document.getElementById('message-success');
+        
+        messageForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const subject = document.getElementById('message-subject').value;
+            const content = document.getElementById('message-content').value;
+            
+            // In a real application, you would send this data to a server
+            // For this demo, we'll just store it in localStorage
+            
+            const timestamp = new Date().toISOString();
+            const messageId = 'msg_' + timestamp;
+            
+            const message = {
+                id: messageId,
+                subject: subject,
+                content: content,
+                timestamp: timestamp,
+                read: false
+            };
+            
+            // Get existing messages or initialize empty array
+            let messages = JSON.parse(localStorage.getItem('anonymous_messages')) || [];
+            
+            // Add new message
+            messages.push(message);
+            
+            // Save back to localStorage
+            localStorage.setItem('anonymous_messages', JSON.stringify(messages));
+            
+            // Show success message
+            messageSuccess.style.display = 'block';
+            
+            // Reset form
+            messageForm.reset();
+            
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+                messageSuccess.style.display = 'none';
+            }, 3000);
+        });
+        
+        // Admin functionality would be in a separate password-protected page in a real application
+        
+        // Check if there are new messages (this would typically be on an admin page)
+        function checkForNewMessages() {
+            const messages = JSON.parse(localStorage.getItem('anonymous_messages')) || [];
+            const unreadCount = messages.filter(msg => !msg.read).length;
+            
+            // Here you would update some UI element to show unread count
+            console.log(`You have ${unreadCount} unread messages`);
+            
+            return unreadCount;
+        }
+        
+        // Function to display messages (would be on admin page)
+        function displayMessages() {
+            const messages = JSON.parse(localStorage.getItem('anonymous_messages')) || [];
+            
+            if (messages.length === 0) {
+                console.log('No messages yet');
+                return;
+            }
+            
+            messages.forEach(msg => {
+                console.log(`ID: ${msg.id}`);
+                console.log(`Subject: ${msg.subject}`);
+                console.log(`Content: ${msg.content}`);
+                console.log(`Timestamp: ${new Date(msg.timestamp).toLocaleString()}`);
+                console.log(`Read: ${msg.read}`);
+                console.log('-------------------');
+            });
+        }
+        
+        // For demonstration purposes only
+        // In a real application, these would be on a separate admin page
+        // console.log('New messages:', checkForNewMessages());
+        // displayMessages();
+    </script>
+</body>
+</html>
